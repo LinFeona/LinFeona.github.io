@@ -5,13 +5,13 @@
 # If you need help with YAML syntax, here are some quick references for you:
 # https://learn-the-web.algonquindesign.ca/topics/markdown-yaml-cheat-sheet/#yaml
 # https://learnxinyminutes.com/docs/yaml/
-
-title: Edit _config.yml to set your title!
-description: This is where the description of your site will go. You should change it by editing the _config.yml file. It can be as long as you like! Happy blogging... ❤
-github_username: jph00
+#jph00
+title: Feona的博客!
+description: 我不知道该怎样表达你留在我心中最强最深的印象，是你丰满颀长的身材，白皙的皮肤。乌黑幽深的眼睛，小巧红润的嘴唇，但还有一种说不出，捉不到的丰仪在煽动着我的心... ❤
+github_username: LinFeona
 
 # Email and twitter are optional:
-email:
+email: 2950167101@qq.com
 twitter_username:
 
 # Set this to true to get LaTeX math equation support
