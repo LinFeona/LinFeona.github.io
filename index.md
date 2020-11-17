@@ -1,10 +1,6 @@
+# Feona
 
-![Image of fast.ai logo](images/logo.png)
+![](image/my_logo.png)
 
-## This is a title
-## 王亚伦
-And you can include links, like this [link to fast.ai](https://www.fast.ai). Posts will appear after this file. 
-
-## [百度](https://www.baidu.com)
-
-![图片](images/logo.png)
+>博客创建于2020年11月17日
+>>学习用途
