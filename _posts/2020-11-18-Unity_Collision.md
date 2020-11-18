@@ -1,5 +1,5 @@
 # Unity-------碰撞事件 触发事件
-$\color{#0000FF}{*2020-11-18 Feona 编辑*}$ 
+$\color{#0000FF}{2020-11-18 Feona 编辑}$ 
 
 
 [![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://www.baidu.com)
