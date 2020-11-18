@@ -4,8 +4,6 @@
 [![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://www.baidu.com)
 
 
-![ss](http://ww4.sinaimg.cn/mw690/e75a115bgw1f3rrbzv1m8g209v0diqv7.gif)
-
 
 - 将脚本绑定到需要移动旋转操作的物体节点上
 - 物体节点需要有刚体组件，因为在跳跃的时候需要物体特性才能掉下来，否则会一直停留在空中
