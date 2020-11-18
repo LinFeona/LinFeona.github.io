@@ -1,5 +1,4 @@
 # Unity-------键盘移动 鼠标旋转 空格跳跃
-> $\color{#0000FF}{2020年11月18日Feona 编辑}$ 
 
 [![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://www.baidu.com)
 
@@ -9,7 +8,7 @@
 - 物体节点需要有刚体组件，因为在跳跃的时候需要物体特性才能掉下来，否则会一直停留在空中(图0-1)
 - 可以将用户摄像机拖动到可移动旋转的物体节点下 从而实现 第一人称漫游
 
-![aa](./../images/Unity_move/rig.png)
+![aa](../../images/Unity_move/rig.png)
 
 
 
@@ -62,3 +61,7 @@ void Update () {
     }
 
 ```
+
+
+
+> $\color{#0000FF}{2020年11月18日Feona 编辑}$ 
