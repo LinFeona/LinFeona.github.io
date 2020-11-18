@@ -1,5 +1,7 @@
 # Unity-------碰撞事件 触发事件
 $\color{#0000FF}{*2020-11-18 Feona 编辑*}$ 
+
+
 [![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://www.baidu.com)
 
 - 碰撞和被碰撞的物体都需要加有 Collider 碰撞组件
