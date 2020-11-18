@@ -1,3 +1,6 @@
-# Your blog
+# 创建于2020年11月16日
 
-This is the repository for your blog! Click *_config.yml* above to get started and fill in the details. Then click *index.md* and edit it to start creating your home page.
+> 采用Jekyll 模板----
+> 后续慢慢美化
+> 现在已经极限了
+> .....
