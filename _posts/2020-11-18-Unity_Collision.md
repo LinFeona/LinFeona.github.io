@@ -11,7 +11,10 @@ $\color{#0000FF}{2020-11-18 Feona 编辑}$
 > 代码块
 
 >>　触发器事件
+
+
 ```C#
+
 //触发开始
 public void OnTriggerEnter(Collider collider){
     
