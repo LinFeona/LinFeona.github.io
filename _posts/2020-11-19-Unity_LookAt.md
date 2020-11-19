@@ -5,12 +5,10 @@
 > 代码
 
 
-```C#
-
+``` C#
 //目标物体
 GameObject target；
-
-transform.LookAt(target.position)
+transform.LookAt(target.position);
 
 ```
 
