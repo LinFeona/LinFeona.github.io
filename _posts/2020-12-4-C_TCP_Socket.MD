@@ -31,6 +31,7 @@
 ```
 
 - 监听
+
 ```C
 	// step1 创建一个监听的socket;
 	int s = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP); // TCP
