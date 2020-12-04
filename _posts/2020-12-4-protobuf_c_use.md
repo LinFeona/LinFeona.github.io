@@ -14,18 +14,18 @@
 
 ## 协议描述文件的编辑使用
 
-- proto 文件
-
+-- proto 文件
 ```proto
   message Person {  
-  required string name = 1;  
+  required string name = 1;   required 表示必须要设置值的
   required int32 age = 2;  
-  optional string email = 3;  
+  optional string email = 3;  optional 可以不设值
 }  
-
 ```
 
-- 生成编码解码器
+
+-- 生成编码解码器
+
 ```cmd
 
 cd proto
@@ -39,8 +39,43 @@ protoc.exe --cpp_out=./ filename.proto
  - 将生成的.cc 与.h 添加到项目中
  - #include到模块中
  
+ 
  ```C++
  #include"../proto/Person.pb.h"
  ```
  
+ - 编译如果编译不通过 
+ -- 右键解决方案-> 属性->c/c++ -> 常规 ->SDL检查 设置为否
+ -- 右键解决方案-> 属性->c/c++ -> 代码生成 -> 运行库 设为多线程调试(/MTD) 或者MT 模式
+ 
+ 
+ ### get/set数据  
+ 
+  --- protobuf流程 将数据序列化 -> 传输 --> 反解 --> get数据
+  
+  ```C++
+  
+   //存
+    Person p; // 编辑proto协议文件中的类名
+    p.set_name("name");
+    p.set_age(3);
+    p.set_email("email");
+
+    //取  .c_str() 是因为返回的是string 不是传统的C 
+    printf("%s \n %d \n%s\n", p.name().c_str(), p.age(), p.email().c_str());
+
+    //序列化
+    string out;
+    p.SerializeToString(&out);
+   
+      //反序列化
+    Person p2;
+    p2.ParseFromString(out);
+    cout << p2.name() << p2.age() << p2.email()<<endl;
+  
+  ```
+  
+  
+  
+  
 
