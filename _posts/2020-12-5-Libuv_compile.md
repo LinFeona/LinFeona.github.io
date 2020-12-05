@@ -46,7 +46,7 @@
 - 因为考虑到跨平台 链接库文件还需要放在 链接器的命令行中 因为#pragma comment 是win才有的 
 - so 右击 项目解决方案 -> 属性 -> 链接器 -> 命令行 添加 ws2_32.lib Psapi.lib Iphlpapi.lib Userenv.lib  -> 应用
 
--则将原来的 pragma 删掉
+- 则将原来的 pragma 删掉
 
 ```C
 #pragma comment(lib, "ws2_32.lib")
@@ -55,6 +55,7 @@
 #pragma comment(lib, "Userenv.lib")
 ```
 
+- 如果没加这几个库文件 会报一些链接错误 一般阅读一下错误提示去百度查一下就能发现需要链接哪个库了
 
 ## 另外 libuv/test 目录下是 官方写的测试代码 可以去阅读查看
 
