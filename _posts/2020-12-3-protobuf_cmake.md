@@ -18,4 +18,4 @@
  -- libprotobuf 自己的项目需要用
  -- libprotoc 协议代码 在运行编码解码时候需要调度的库
  -- protoc protobuf的编译器 可生成不同语言版本协议文件
- - 头文件在protobuf/src/google/protobuf目录下 c/c++目录
+ - 头文件在protobuf/src目录下 c/c++目录
