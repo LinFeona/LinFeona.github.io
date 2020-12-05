@@ -3,18 +3,19 @@
 
 ## 前置配置
 
-- 项目创建的目录结构 src win32 3rd proto 分别为 代码 运行时目录 第三方库 协议
-- 将protobuf的三个库构建出来 – libprotobuf  libprotoc  protoc  
-- lib库文件放置到win32/protobuf目录中 没有目录就创建
-- protoc放到 proto目录中 用于编辑协议描述文件
-- 将protobuf 未构建的目录 整个目录复制到3rd中
-- 将项目头文件包含目录 指定到 protobuf/src
-- 将项目链接库文件包含目录 指定到 运行时目录下 protobuf中
-- 在库文件命令行中添加库文件libprotobuf.lib libprotocd.lib
+- 项目创建的目录结构 `src` `win32` `3rd`  `proto` 分别为 `代码` `运行时目录` `第三方库` `协议`
+- 将`protobuf工程`的三个库构建出来 – `libprotobuf`  `libprotoc`  `protoc`  
+- lib库文件放置到`win32/protobuf`目录中 没有目录就创建
+- `protoc.exe`放到 `proto`目录中 用于编辑协议描述文件
+- 将`protobuf未构建的目录` 整个目录复制到`3rd`中
+- 将项目头文件包含目录 指定到 `protobuf/src`
+- 将项目链接库文件包含目录 指定到 运行时目录下 `protobuf`中
+- 在库文件命令行中添加库文件`libprotobuf.lib` `libprotocd.lib`
 
 ## 协议描述文件的编辑使用
 
 - proto 文件
+
 ```proto
   message Person {  
   required string name = 1;   required 表示必须要设置值的
@@ -24,7 +25,7 @@
 ```
 
 
-- 生成编码解码器
+- 生成编码解码器 cmd 命令行
 
 ```cmd
 
@@ -49,7 +50,7 @@ protoc.exe --cpp_out=./ filename.proto
  - 右键解决方案-> 属性->c/c++ -> 代码生成 -> 运行库 设为多线程调试(/MTD) 或者MT 模式
  
  
- ### get/set数据  
+ ## get/set数据  
  
   - protobuf流程 将数据序列化 -> 传输 --> 反解 --> get数据
   
