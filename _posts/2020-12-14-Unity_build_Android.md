@@ -24,7 +24,7 @@
 
 - 选择一个路径 最好默认的路径 记住这个路径 环境变量会用到
 
-![0-1](../../../images/img/jdk_0-2.png"ddd")
+![0-1](../../../images/img/jdk_0-2.png "ddd")
 
 - 直接下一步 默认下一步 直到完成安装
 
@@ -109,6 +109,14 @@
 
 - 最后 开始打包 build 
 
-![0-1](../../../images/img/unity_build_0-6.png "ddd")
+![0-1](../../../images/img/unity_build_0-11.png "ddd")
+
+![0-1](../../../images/img/unity_build_0-14.png "ddd")
+
+![0-1](../../../images/img/unity_build_0-12.png "ddd")
+
+![0-1](../../../images/img/unity_build_0-13.png "ddd")
+
+
 
 
