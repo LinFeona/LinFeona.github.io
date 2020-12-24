@@ -1,0 +1,188 @@
+
+
+body{
+	background-color: #ccc;
+}
+
+
+#box{
+width: 1000px;
+height: 1000px;
+
+background-color: yellow;
+margin-top: 40px;
+
+}
+
+#top{
+	width: 1500px;
+	height: 100px;
+	background-color: blue;
+
+}
+/* #box{
+	width: 1000px;
+	height: 1000px;
+	background-color: yellow;
+	position:absolute;
+    top:50%;
+    left:50%;
+    margin:-225px 0 0 -400px;
+} */
+
+
+#box_left{
+	width: 600px;
+	height: 1000px;
+	background-color: white;
+	float: left;
+	margin-left: 20px;
+}
+
+#box_right{
+	width: 320px;
+	height: 1000px;
+	background-color: green;
+	float: right;
+	margin-right: 20px;
+
+}
+#box_left_content{
+	width: 540px;
+	height: 300px;
+	background-color: orange;
+	margin-top: 30px;
+}
+
+#box_right_content{
+	width: 300px;
+	height: 450px;
+	background-color: purple;
+	margin-top: 30px;
+}
+
+#top_logo{
+	width: 180px;
+	height: 80px;
+	background-color: purple;
+	float: left;
+	margin-top: 10px;
+	margin-left: 250px;
+	margin-right: 150px;
+
+}
+
+
+#top_Button{
+	width: 90px;
+	height: 80px;
+	background-color: white;
+	float: left;
+	margin-top: 10px;
+	 margin-left: 3px;
+}
+
+
+#box_left_content_iocn{
+	width: 130px;
+	height: 130px;
+	background-color: white;
+	float:  left;
+	margin-top: 15px;
+	margin-left: 20px;
+}
+
+#box_left_content_title{
+	width: 400px;
+	height: 50px;
+	background-color: purple;
+	margin-top: 20px;
+	float: left;
+	/* margin-left: 70px; */
+	margin-left: 30px;
+}
+
+
+#box_left_content_information{
+	width: 500px;
+	height: 30px;
+	background-color: purple;
+	float: left;
+	margin-top: 10px;
+	margin-left: 30px;
+
+}
+
+#box_left_content_content{
+	width: 330px;
+	height: 130px;
+	background-color: yellow;
+	float: left;
+	margin-left: 20px;
+	margin-top: 15px;
+}
+#box_right_content_title{
+	width: 150px;
+	height: 40px;
+	background-color: yellow;
+	float: left;
+	margin-top:20px;
+	margin-left:20px;
+}
+
+#box_right_content_content{
+
+	width: 200px;
+	height: 20px;
+	float: left;
+	background-color: white;
+	margin-top:20px;
+	margin-left: 20px;
+}
+
+#box_right_content_contact{
+	width: 50px;
+	height: 50px;
+	/* border-radius: 100px;  */
+	background-color: white;
+
+}
+
+.QQ{
+	border-radius: 100px;
+		float: left;
+	margin-top:25px;
+	margin-left: 35px;
+}
+
+.WX{
+	border-radius: 100px;
+		float: left;
+	margin-top:25px;
+	margin-left: 35px;
+}
+
+.Git{
+	border-radius: 100px;
+		float: left;
+	margin-top:25px;
+	margin-left: 35px;
+}
+
+.Email{
+	float: left;
+	margin-top:25px;
+	margin-left: 120px;
+}
+
+
+
+#box_right_content2_content{
+	width: 280px;
+	height: 300px;
+	background-color: white;
+	float: left;
+	margin-top: 20px;
+	margin-left: 10px;
+
+}
