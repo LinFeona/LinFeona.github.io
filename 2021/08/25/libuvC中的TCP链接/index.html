@@ -4,13 +4,17 @@
   <meta charset="utf-8">
   
   
-  <title>摸鱼会所</title>
+  <title>Libuv C中的tcp连接 | 摸鱼会所</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="摸鱼会所">
-<meta property="og:url" content="http://example.com/index.html">
+  <meta name="description" content="可以阅读 更多文章! C语言 libuv tcp socket 头文件引入  1#include &quot;uv.h&quot;   loop 循环  1234567 &#x2F;&#x2F;循环句柄 最好定义成全局的 static uv_loop_t* loop &#x3D; NULL;  &#x2F;&#x2F;给循环句柄初始化loop &#x3D; uv_default_loop(); &#x2F;&#x2F;启动事件循环uv_run(loop, UV_RUN_DEF">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Libuv C中的tcp连接">
+<meta property="og:url" content="http://example.com/2021/08/25/libuvC%E4%B8%AD%E7%9A%84TCP%E9%93%BE%E6%8E%A5/index.html">
 <meta property="og:site_name" content="摸鱼会所">
+<meta property="og:description" content="可以阅读 更多文章! C语言 libuv tcp socket 头文件引入  1#include &quot;uv.h&quot;   loop 循环  1234567 &#x2F;&#x2F;循环句柄 最好定义成全局的 static uv_loop_t* loop &#x3D; NULL;  &#x2F;&#x2F;给循环句柄初始化loop &#x3D; uv_default_loop(); &#x2F;&#x2F;启动事件循环uv_run(loop, UV_RUN_DEF">
 <meta property="og:locale">
+<meta property="article:published_time" content="2021-08-25T06:32:04.784Z">
+<meta property="article:modified_time" content="2021-08-25T08:08:20.972Z">
 <meta property="article:author" content="性感的Feona">
 <meta name="twitter:card" content="summary">
   
@@ -69,77 +73,7 @@
 </header>
 
       <div class="outer">
-        <section id="main">
-  
-    <article id="post-libuv_session内存池的设计" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2021/08/25/libuv_session%E5%86%85%E5%AD%98%E6%B1%A0%E7%9A%84%E8%AE%BE%E8%AE%A1/" class="article-date">
-  <time class="dt-published" datetime="2021-08-25T06:33:24.247Z" itemprop="datePublished">2021-08-25</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2021/08/25/libuv_session%E5%86%85%E5%AD%98%E6%B1%A0%E7%9A%84%E8%AE%BE%E8%AE%A1/">libuv session内存池的设计</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p>可以阅读 <a target="_blank" rel="noopener" href="https://linfeona.github.io/archives/">更多文章</a>!</p>
-<h2 id="session-原理"><a href="#session-原理" class="headerlink" title="session 原理"></a>session 原理</h2><ul>
-<li><p>每个socket 都会对应一个session跟客户端socket 所有的交流都在session中处理</p>
-</li>
-<li><p>session 会提供几个主流的接口<br>发送数据 关闭连接 以及获取信息</p>
-</li>
-<li><p>每当有一个用户进来的时候 就通过session.create 来创建一个session来对接新的用户</p>
-</li>
-<li><p>每当有一个用户离开的时候 就通过 session.destroy 进行回收</p>
-</li>
-<li><p>session.create 以及 session.destroy 为从内存池中获取以及回收到内存池中</p>
-</li>
-</ul>
-<h2 id="内存池设计原理"><a href="#内存池设计原理" class="headerlink" title="内存池设计原理"></a>内存池设计原理</h2><ul>
-<li>一次性创建大量session </li>
-<li>session.create时 获取一个</li>
-<li>session.destroy 时 清空数据回收到池中</li>
-<li>分配器的管理</li>
-<li></li>
-</ul>
-<h2 id="多个协议session-原理"><a href="#多个协议session-原理" class="headerlink" title="多个协议session 原理"></a>多个协议session 原理</h2><ul>
-<li>若有多个协议的连接 可能session中的数据结构会有所不同</li>
-<li>session 可以采用继承模式 session基类则提供基础接口子类则区分这些不同的结构<br>子类则区分这些不同的结构</li>
-<li>上层使用时只管使用session即可</li>
-</ul>
-<h2 id="session-基类"><a href="#session-基类" class="headerlink" title="session 基类"></a>session 基类</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> __SESSION_H__</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __SESSION_H__</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">session</span> &#123;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/// &lt;summary&gt;</span></span><br><span class="line"><span class="comment">/// 释放session 发送数据 获取session地址信息</span></span><br><span class="line"><span class="comment">/// &lt;/summary&gt;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">close</span><span class="params">()</span> </span>= <span class="number">0</span>;</span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">send_data</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">char</span>* body, <span class="keyword">int</span> len)</span> </span>= <span class="number">0</span>;</span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">const</span> <span class="keyword">char</span>* <span class="title">get_address</span><span class="params">(<span class="keyword">int</span>* client_port)</span> </span>= <span class="number">0</span>;</span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">send_msg</span><span class="params">(struct cmd_msg* msg)</span> </span>= <span class="number">0</span>;</span><br><span class="line">	</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
-
-<h2 id="session-子类"><a href="#session-子类" class="headerlink" title="session 子类"></a>session 子类</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> __SESSION_UV_H__</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __SESSION_UV_H__</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> RECV_LEN 4096</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">enum</span> &#123;</span></span><br><span class="line">	TCP_SOCKET,</span><br><span class="line">	WS_SOCKET,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">uv_session</span> :</span> session &#123;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//session的信息</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="keyword">uv_tcp_t</span> tcp_handler; <span class="comment">//session句柄</span></span><br><span class="line">	<span class="keyword">char</span> c_address[<span class="number">32</span>]; <span class="comment">//ip</span></span><br><span class="line">	<span class="keyword">int</span> c_port;<span class="comment">//端口</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">//回调函数中需要的结构 预先在session中分配好 避免在外部</span></span><br><span class="line">	<span class="comment">//再次分配 管理好内存的分配</span></span><br><span class="line">	<span class="keyword">uv_shutdown_t</span> shutdown;</span><br><span class="line">	<span class="comment">//是否已经释放 避免重复释放 因为异步原因</span></span><br><span class="line">	<span class="keyword">bool</span> is_shutdown;</span><br><span class="line"></span><br><span class="line"><span class="comment">/// &lt;summary&gt;</span></span><br><span class="line"><span class="comment">/// 接收到的数据 信息</span></span><br><span class="line"><span class="comment">/// &lt;/summary&gt;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="keyword">char</span> recv_buf[RECV_LEN]; <span class="comment">//单个包只接收这么长数据</span></span><br><span class="line">	<span class="keyword">int</span> recved;</span><br><span class="line">	<span class="keyword">int</span> socket_type; <span class="comment">//服务器类型 tcp or web</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">/// &lt;summary&gt;</span></span><br><span class="line">	<span class="comment">/// 长包 超过了 4096</span></span><br><span class="line">	<span class="comment">/// &lt;/summary&gt;</span></span><br><span class="line">	<span class="keyword">char</span>* long_pkg;</span><br><span class="line">	<span class="comment">/// &lt;summary&gt;</span></span><br><span class="line">	<span class="comment">/// 长包大小</span></span><br><span class="line">	<span class="comment">/// &lt;/summary&gt;</span></span><br><span class="line">	<span class="keyword">int</span> long_pkg_size;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="keyword">int</span> is_ws_shake; <span class="comment">//是否握手</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/// &lt;summary&gt;</span></span><br><span class="line"><span class="comment">/// 初始化与销毁 因为需要使用session池管理</span></span><br><span class="line"><span class="comment">/// 	不需要调用构造和析构 函数 构造则是从池中获取一个session</span></span><br><span class="line"><span class="comment">/// 	析构则是放回池中</span></span><br><span class="line"><span class="comment">/// &lt;/summary&gt;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">()</span></span>;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">exit</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/// &lt;summary&gt;</span></span><br><span class="line"><span class="comment">/// 创建一个session  销毁一个session </span></span><br><span class="line"><span class="comment">/// 需要使用session池来管理</span></span><br><span class="line"><span class="comment">/// &lt;/summary&gt;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">static</span> uv_session* <span class="title">create</span><span class="params">()</span></span>;</span><br><span class="line">	<span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">destroy</span><span class="params">(uv_session* s)</span></span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/// &lt;summary&gt;</span></span><br><span class="line"><span class="comment">/// 释放session 发送数据 获取session地址信息</span></span><br><span class="line"><span class="comment">/// &lt;/summary&gt;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">close</span><span class="params">()</span></span>;</span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">send_data</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">char</span>* body, <span class="keyword">int</span> len)</span></span>;</span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">const</span> <span class="keyword">char</span>* <span class="title">get_address</span><span class="params">(<span class="keyword">int</span>* client_port)</span></span>;</span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">send_msg</span><span class="params">(struct cmd_msg* msg)</span></span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">/// &lt;summary&gt;</span></span><br><span class="line"><span class="comment">/// 初始化内存分配器</span></span><br><span class="line"><span class="comment">/// &lt;/summary&gt;</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">init_session_allocer</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
-
-
-<h2 id="内存池"><a href="#内存池" class="headerlink" title="内存池"></a>内存池</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">		内存池 项目中大大小小的内存全部由内存池分配</span></span><br><span class="line"><span class="comment">		提供了</span></span><br><span class="line"><span class="comment">		创建内存分配器</span></span><br><span class="line"><span class="comment">		销毁内存分配器</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">		分配器中获取一段内存</span></span><br><span class="line"><span class="comment">		回收一段内存</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">		原理：</span></span><br><span class="line"><span class="comment">			分配器预先分配一段大的内存</span></span><br><span class="line"><span class="comment">			使用的时候在从分配器中取指定的大小</span></span><br><span class="line"><span class="comment">			销毁的时候将内存清空回收到分配器中</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">			例如预先分配一万个session </span></span><br><span class="line"><span class="comment">			一个客户端接入就分配一个</span></span><br><span class="line"><span class="comment">		</span></span><br><span class="line"><span class="comment">		内存结构为链表结构</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> __CACHE_ALLOC_H__</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __CACHE_ALLOC_H__</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> __cplusplus</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span> &#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"></span><br><span class="line">	<span class="comment">/// &lt;summary&gt;</span></span><br><span class="line">	<span class="comment">/// 创建一个内存分配器</span></span><br><span class="line">	<span class="comment">/// &lt;/summary&gt;</span></span><br><span class="line">	<span class="comment">/// &lt;param name=&quot;capacity&quot;&gt;容量&lt;/param&gt;</span></span><br><span class="line">	<span class="comment">/// &lt;param name=&quot;elem_size&quot;&gt;每个元素的大小&lt;/param&gt;</span></span><br><span class="line">	<span class="function">struct cache_allocer* <span class="title">create_cache_allocer</span><span class="params">(<span class="keyword">int</span> capacity, <span class="keyword">int</span> elem_size)</span></span>;</span><br><span class="line">	<span class="comment">/// &lt;summary&gt;</span></span><br><span class="line">	<span class="comment">/// 销毁内存分配器</span></span><br><span class="line">	<span class="comment">/// &lt;/summary&gt;</span></span><br><span class="line">	<span class="comment">/// &lt;param name=&quot;allocer&quot;&gt;分配器&lt;/param&gt;</span></span><br><span class="line">	<span class="comment">/// &lt;returns&gt;分配器对象&lt;/returns&gt;</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">destroy_cache_allocer</span><span class="params">(struct cache_allocer* allocer)</span></span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/// &lt;summary&gt;</span></span><br><span class="line">	<span class="comment">///  从分配器中获取一段内存</span></span><br><span class="line">	<span class="comment">/// &lt;/summary&gt;</span></span><br><span class="line">	<span class="comment">/// &lt;param name=&quot;allocer&quot;&gt;分配器&lt;/param&gt;</span></span><br><span class="line">	<span class="comment">/// &lt;param name=&quot;elem_size&quot;&gt;内存大小&lt;/param&gt;</span></span><br><span class="line">	<span class="comment">/// &lt;returns&gt;返回分配的内存&lt;/returns&gt;</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span>* <span class="title">cache_alloc</span><span class="params">(struct cache_allocer* allocer, <span class="keyword">int</span> elem_size)</span></span>;</span><br><span class="line">	<span class="comment">/// &lt;summary&gt;</span></span><br><span class="line">	<span class="comment">/// 回收一段内存</span></span><br><span class="line">	<span class="comment">/// &lt;/summary&gt;</span></span><br><span class="line">	<span class="comment">/// &lt;param name=&quot;allocer&quot;&gt;分配器&lt;/param&gt;</span></span><br><span class="line">	<span class="comment">/// &lt;param name=&quot;mem&quot;&gt;内存地址&lt;/param&gt;</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">cache_free</span><span class="params">(struct cache_allocer* allocer, <span class="keyword">void</span>* mem)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> __cplusplus</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2021/08/25/libuv_session%E5%86%85%E5%AD%98%E6%B1%A0%E7%9A%84%E8%AE%BE%E8%AE%A1/" data-id="cksr7vbux00021ot9febl1txo" data-title="libuv session内存池的设计" class="article-share-link">Share</a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-libuvC中的TCP链接" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+        <section id="main"><article id="post-libuvC中的TCP链接" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2021/08/25/libuvC%E4%B8%AD%E7%9A%84TCP%E9%93%BE%E6%8E%A5/" class="article-date">
   <time class="dt-published" datetime="2021-08-25T06:32:04.784Z" itemprop="datePublished">2021-08-25</time>
@@ -152,8 +86,8 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2021/08/25/libuvC%E4%B8%AD%E7%9A%84TCP%E9%93%BE%E6%8E%A5/">Libuv C中的tcp连接</a>
+    <h1 class="p-name article-title" itemprop="headline name">
+      Libuv C中的tcp连接
     </h1>
   
 
@@ -224,146 +158,28 @@
     </footer>
   </div>
   
-</article>
-
-
-
+    
+<nav id="article-nav">
   
-    <article id="post-libuv在C中的环境配置" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2021/08/25/libuv%E5%9C%A8C%E4%B8%AD%E7%9A%84%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" class="article-date">
-  <time class="dt-published" datetime="2021-08-24T16:51:38.002Z" itemprop="datePublished">2021-08-25</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+    <a href="/2021/08/25/libuv_session%E5%86%85%E5%AD%98%E6%B1%A0%E7%9A%84%E8%AE%BE%E8%AE%A1/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
         
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2021/08/25/libuv%E5%9C%A8C%E4%B8%AD%E7%9A%84%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/">Libuv c语言中的环境配置</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p>可以阅读 <a target="_blank" rel="noopener" href="https://linfeona.github.io/archives/">更多文章</a>!</p>
-<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><ul>
-<li>libuv是跨平台的异步事件库</li>
-</ul>
-<h2 id="libuv-下载"><a href="#libuv-下载" class="headerlink" title="libuv 下载"></a>libuv 下载</h2><ul>
-<li><a target="_blank" rel="noopener" href="http://libuv.org/">libuv官网</a></li>
-<li><a target="_blank" rel="noopener" href="https://dist.libuv.org/dist/">下载直通车</a></li>
-<li>选择一个版本 下载 <code>gz</code> 后缀的源码</li>
-</ul>
-<h2 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h2><ul>
-<li><p>项目目录 <code>src</code> <code>win32</code> <code>3rd</code>  目录 代码 运行时目录 第三方代码</p>
-</li>
-<li><p>将 libuv/src 与 include 复制到 项目的3rd/libuv目录中 无libuv目录则创建</p>
-</li>
-<li><p>将项目附件包含头文件目录 添加 3rd/libuv/include目录</p>
-</li>
-<li><p>引入头文件</p>
-</li>
-</ul>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;uv.h&gt;</span></span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>编译不通过则 右击项目解决方案 -&gt; 属性 -&gt; C/C++ -&gt; 常规 -&gt; SDL检查 设为否</li>
-<li>链接lib库</li>
-</ul>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> comment(lib, <span class="meta-string">&quot;ws2_32.lib&quot;</span>)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> comment(lib,<span class="meta-string">&quot;Psapi.lib&quot;</span>)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> comment(lib,<span class="meta-string">&quot;Iphlpapi.lib&quot;</span>)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> comment(lib, <span class="meta-string">&quot;Userenv.lib&quot;</span>)</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>若还是编译不通过 则是头文件再包含一个 3rd/libuv/src 目录 因为有几个头文件在src目录 而C文件工作目录在src/win 则需要返回上一级</li>
-</ul>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;uv.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;internal.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;../queue.h&quot;</span> <span class="comment">//这个</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;handle-inl.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;../heap-inl.h&quot;</span> <span class="comment">//像这个</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;req-inl.h&quot;</span></span></span><br></pre></td></tr></table></figure>
-
-
-<ul>
-<li><p>因为考虑到跨平台 链接库文件还需要放在 链接器的命令行中 因为#pragma comment 是win才有的 </p>
-</li>
-<li><p>so 右击 项目解决方案 -&gt; 属性 -&gt; 链接器 -&gt; 命令行 添加 ws2_32.lib Psapi.lib Iphlpapi.lib Userenv.lib  -&gt; 应用</p>
-</li>
-<li><p>则将原来的 pragma 删掉</p>
-</li>
-</ul>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> comment(lib, <span class="meta-string">&quot;ws2_32.lib&quot;</span>)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> comment(lib,<span class="meta-string">&quot;Psapi.lib&quot;</span>)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> comment(lib,<span class="meta-string">&quot;Iphlpapi.lib&quot;</span>)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> comment(lib, <span class="meta-string">&quot;Userenv.lib&quot;</span>)</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>如果没加这几个库文件 会报一些链接错误 一般阅读一下错误提示去百度查一下就能发现需要链接哪个库了</li>
-</ul>
-<h2 id="另外-libuv-test-目录下是-官方写的测试代码-可以去阅读查看"><a href="#另外-libuv-test-目录下是-官方写的测试代码-可以去阅读查看" class="headerlink" title="另外 libuv/test 目录下是 官方写的测试代码 可以去阅读查看"></a>另外 libuv/test 目录下是 官方写的测试代码 可以去阅读查看</h2>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2021/08/25/libuv%E5%9C%A8C%E4%B8%AD%E7%9A%84%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" data-id="cksr7vbuz00031ot9hig86m6i" data-title="Libuv c语言中的环境配置" class="article-share-link">Share</a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-hello-world" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2021/08/25/hello-world/" class="article-date">
-  <time class="dt-published" datetime="2021-08-24T16:46:14.695Z" itemprop="datePublished">2021-08-25</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+          libuv session内存池的设计
         
+      </div>
+    </a>
   
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2021/08/25/hello-world/">Hello World</a>
-    </h1>
   
+    <a href="/2021/08/25/libuv%E5%9C%A8C%E4%B8%AD%E7%9A%84%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Libuv c语言中的环境配置</div>
+    </a>
+  
+</nav>
 
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2021/08/25/hello-world/" data-id="cksr7vbum00001ot9blyk2hhj" data-title="Hello World" class="article-share-link">Share</a>
-      
-      
-      
-    </footer>
-  </div>
   
 </article>
-
-
-
-  
 
 
 </section>
