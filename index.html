@@ -71,10 +71,10 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-2020-11-18-Unity_move" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-Unity_build_Android" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2021/09/16/2020-11-18-Unity_move/" class="article-date">
-  <time class="dt-published" datetime="2021-09-16T07:45:57.684Z" itemprop="datePublished">2021-09-16</time>
+    <a href="/2021/09/20/Unity_build_Android/" class="article-date">
+  <time class="dt-published" datetime="2021-09-20T04:24:18.235Z" itemprop="datePublished">2021-09-20</time>
 </a>
     
   </div>
@@ -83,11 +83,164 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h1 id="Unity——-键盘移动-鼠标旋转-空格跳跃"><a href="#Unity——-键盘移动-鼠标旋转-空格跳跃" class="headerlink" title="Unity——-键盘移动 鼠标旋转 空格跳跃"></a>Unity——-键盘移动 鼠标旋转 空格跳跃</h1><ul>
+        <link href="http://statics.1024tools.com/css/markdown/github.css" rel="stylesheet" />
+<hr>
+<p>title: Unity 打包Android环境配置</p>
+<hr>
+<ul>
+<li>资源准备
+<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1xaeF8gSlp-RqsEWEP6Doxw">windows-Android-SDK 密码:1111</a>
+<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1EwK8UiulgJM8Uaexa_MReg">Java-jdk 密码:1111</a></li>
+</ul>
+<hr>
+<h2 id="java-jdk-">java-jdk安装</h2>
+<ul>
+<li>先查看 Unity 是否有jdk </li>
+<li>Unity 打开首选项    edit -&gt; preferences -&gt; External Tools -&gt; jdk 如果是勾选上的 并且是这样子的</li>
+</ul>
+<p><img src="../image/Unity_Android/jdk_path_1-4.png" alt="0-1" title="ddd"></p>
+<ul>
+<li><p>那么恭喜你 这一步可以跳过了 可往下拉到sdk的环节了</p>
+</li>
+<li><p>1.安装jdk</p>
+</li>
+</ul>
+<p><img src="../image/Unity_Android/jdk_0-1.png" alt="0-1" title="ddd"></p>
+<ul>
+<li>选择一个路径 最好默认的路径 记住这个路径 环境变量会用到</li>
+</ul>
+<p><img src="../image/Unity_Android/jdk_0-2.png" alt="0-1" title="ddd"></p>
+<ul>
+<li>直接下一步 默认下一步 直到完成安装</li>
+</ul>
+<hr>
+<h2 id="java-">java环境配置</h2>
+<ul>
+<li>复制jdk的路径</li>
+</ul>
+<p><img src="../image/Unity_Android/jdk_path_1-0.png" alt="0-1" title="ddd"></p>
+<ul>
+<li>右键我的电脑-属性-高级系统设置-环境变量-系统变量</li>
+</ul>
+<p><img src="../image/Unity_Android/jdk_path_1-1.png" alt="0-1" title="ddd"></p>
+<ul>
+<li>新建系统变量 变量名为 <code>JAVA_HOME</code> 变量值为 <code>C:\Program Files\Java\jdk1.8.0_152</code>  就是你jdk的路径</li>
+</ul>
+<p><img src="../image/Unity_Android/jdk_path_1-5.png" alt="0-1" title="ddd"></p>
+<ul>
+<li>找到系统变量的 <code>PATH</code> 双击它 新建一个变量值 <code>%JAVA_HOME%/bin</code>  若是没有 <code>PATH</code> 变量则新建</li>
+</ul>
+<p><img src="../image/Unity_Android/jdk_path_1-2.png" alt="0-1" title="ddd"></p>
+<ul>
+<li>新建系统变量 变量名为 <code>CLASSPATH</code> 变量值为 <code>.;%JAVA_HOME%\lib;%JAVA_HOME%\lib\tools.jar;</code> 前面还有一个· 后面还有一个分号</li>
+</ul>
+<p><img src="../image/Unity_Android/jdk_path_1-6.png" alt="0-1" title="ddd"></p>
+<hr>
+<h3 id="-java-">测试java环境</h3>
+<ul>
+<li><p>按住 <code>WIN + R</code> 键 输入 <code>cmd</code> 回车</p>
+</li>
+<li><p>在命令行窗口 输入 <code>java -version</code> 回车</p>
+</li>
+</ul>
+<p><img src="../image/Unity_Android/jdk_path_1-3.png" alt="0-1" title="ddd"></p>
+<ul>
+<li>如果正常显示 这样 表示环境已经搭建成功了</li>
+</ul>
+<hr>
+<h2 id="sdk-">sdk环境安装 <code>要记住安装或解压的路径</code></h2>
+<ul>
+<li>直接使用现成的 Windows-Android-sdk  在下载链接中的 <code>android-sdk_r24.4.1-windows.zip</code> 解压即用 非常的银杏</li>
+<li>或者 <a target="_blank" rel="noopener" href="https://blog.csdn.net/chinarcsdn/article/details/79562567">外力援助</a>  使用Android Studio  在下载链接中的 <code>Android-Studio.exe</code> 安装非常的头疼</li>
+</ul>
+<hr>
+<h2 id="unity-sdk-">Unity 与SDK关联</h2>
+<ul>
+<li>打开首选项    edit -&gt; preferences</li>
+</ul>
+<ul>
+<li>External Tools -&gt; jdk   如果是如图<code>3-1</code>酱紫  那这步也跳过 否则那就 取消勾选 点击 <code>Browse</code>  选择jdk的位置 </li>
+</ul>
+<p><img src="../image/Unity_Android/jdk_path_1-4.png" alt="tools">
+<img src="../image/Unity_Android/unity_build_0-9.png" alt="0-1" title="ddd"></p>
+<ul>
+<li>External Tools -&gt; sdk 将勾选取消掉 点击  <code>Browse</code> 选择sdk的路径</li>
+</ul>
+<p><img src="../image/Unity_Android/unity_build_0-8.png" alt="0-1" title="ddd"></p>
+<hr>
+<h2 id="-">打包设置</h2>
+<ul>
+<li>检查一下你的场景是否加载到这里 如果没有的话 就点击 <code>Add Open Scenes</code> 将场景加载进来</li>
+<li>若你有多个场景 请依次打开 并且依次 <code>Add Open Scenes</code> 进来</li>
+<li><p>全部加载进来后再次打开你游戏的初始化场景 再点击 <code>Add Open Scenes</code> 保证它是打开游戏后运行的第一个场景</p>
+</li>
+<li><p>再将平台切换到安卓</p>
+</li>
+</ul>
+<p><img src="../image/Unity_Android/unity_build_0-10.png" alt="0-1" title="ddd"></p>
+<ul>
+<li>打开 <code>Player Settings</code> 进行打包设置</li>
+</ul>
+<p><img src="../image/Unity_Android/unity_build_0-4.png" alt="0-1" title="ddd"></p>
+<ul>
+<li>注意看包名格式 xxx.xxx.xxx 公司名.包名.游戏名</li>
+</ul>
+<p><img src="../image/Unity_Android/unity_build_0-3.png" alt="0-1" title="ddd"></p>
+<ul>
+<li>最后 开始打包 build </li>
+</ul>
+<p><img src="../image/Unity_Android/unity_build_0-11.png" alt="0-1" title="ddd"></p>
+<p><img src="../image/Unity_Android/unity_build_0-14.png" alt="0-1" title="ddd"></p>
+<p><img src="../image/Unity_Android/unity_build_0-12.jpg" alt="0-1" title="ddd"></p>
+<p><img src="../image/Unity_Android/unity_build_0-13.jpg" alt="0-1" title="ddd"></p>
+<ul>
+<li>最后 打包错误锦集 <a target="_blank" rel="noopener" href="https://blog.csdn.net/ChinarCSDN/article/details/79597142">点击外援</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2021/09/20/Unity_build_Android/" data-id="ckts5czs10001m8t98txze2d5" data-title="" class="article-share-link">Teilen</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-Unity_move" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2021/09/16/Unity_move/" class="article-date">
+  <time class="dt-published" datetime="2021-09-16T07:45:57.684Z" itemprop="datePublished">2021-09-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2021/09/16/Unity_move/">Unity 键盘移动 鼠标旋转 空格跳跃</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>可以阅读 <a target="_blank" rel="noopener" href="https://linfeona.github.io/archives/">更多文章</a>!</p>
+<ul>
 <li>将脚本绑定到需要移动旋转操作的物体节点上（图0-1）</li>
 <li>物体节点需要有刚体组件，因为在跳跃的时候需要物体特性才能掉下来，否则会一直停留在空中(图0-1)</li>
 <li>可以将用户摄像机拖动到可移动旋转的物体节点下 从而实现 第一人称漫游</li>
 </ul>
+<p><img src="../image/Unity_move/rig.png" title="0-1"></p>
 <blockquote>
 <p>代码块</p>
 </blockquote>
@@ -101,7 +254,148 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/09/16/2020-11-18-Unity_move/" data-id="cktmmrcqz00007wt97wmbbn69" data-title="" class="article-share-link">Teilen</a>
+      <a data-url="http://example.com/2021/09/16/Unity_move/" data-id="ckts5czs40002m8t9b1m4as99" data-title="Unity 键盘移动 鼠标旋转 空格跳跃" class="article-share-link">Teilen</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-Unity_build_Android" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2021/09/01/Unity_build_Android/" class="article-date">
+  <time class="dt-published" datetime="2021-09-01T07:28:38.266Z" itemprop="datePublished">2021-09-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <link href="http://statics.1024tools.com/css/markdown/github.css" rel="stylesheet" />
+<hr>
+<p>title: Unity 打包Android环境配置</p>
+<hr>
+<ul>
+<li>资源准备
+<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1xaeF8gSlp-RqsEWEP6Doxw">windows-Android-SDK 密码:1111</a>
+<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1EwK8UiulgJM8Uaexa_MReg">Java-jdk 密码:1111</a></li>
+</ul>
+<hr>
+<h2 id="java-jdk-">java-jdk安装</h2>
+<ul>
+<li>先查看 Unity 是否有jdk </li>
+<li>Unity 打开首选项    edit -&gt; preferences -&gt; External Tools -&gt; jdk 如果是勾选上的 并且是这样子的</li>
+</ul>
+<p><img src="../image/Unity_Android/jdk_path_1-4.png" alt="0-1" title="ddd"></p>
+<ul>
+<li><p>那么恭喜你 这一步可以跳过了 可往下拉到sdk的环节了</p>
+</li>
+<li><p>1.安装jdk</p>
+</li>
+</ul>
+<p><img src="../image/Unity_Android/jdk_0-1.png" alt="0-1" title="ddd"></p>
+<ul>
+<li>选择一个路径 最好默认的路径 记住这个路径 环境变量会用到</li>
+</ul>
+<p><img src="../image/Unity_Android/jdk_0-2.png" alt="0-1" title="ddd"></p>
+<ul>
+<li>直接下一步 默认下一步 直到完成安装</li>
+</ul>
+<hr>
+<h2 id="java-">java环境配置</h2>
+<ul>
+<li>复制jdk的路径</li>
+</ul>
+<p><img src="../image/Unity_Android/jdk_path_1-0.png" alt="0-1" title="ddd"></p>
+<ul>
+<li>右键我的电脑-属性-高级系统设置-环境变量-系统变量</li>
+</ul>
+<p><img src="../image/Unity_Android/jdk_path_1-1.png" alt="0-1" title="ddd"></p>
+<ul>
+<li>新建系统变量 变量名为 <code>JAVA_HOME</code> 变量值为 <code>C:\Program Files\Java\jdk1.8.0_152</code>  就是你jdk的路径</li>
+</ul>
+<p><img src="../image/Unity_Android/jdk_path_1-5.png" alt="0-1" title="ddd"></p>
+<ul>
+<li>找到系统变量的 <code>PATH</code> 双击它 新建一个变量值 <code>%JAVA_HOME%/bin</code>  若是没有 <code>PATH</code> 变量则新建</li>
+</ul>
+<p><img src="../image/Unity_Android/jdk_path_1-2.png" alt="0-1" title="ddd"></p>
+<ul>
+<li>新建系统变量 变量名为 <code>CLASSPATH</code> 变量值为 <code>.;%JAVA_HOME%\lib;%JAVA_HOME%\lib\tools.jar;</code> 前面还有一个· 后面还有一个分号</li>
+</ul>
+<p><img src="../image/Unity_Android/jdk_path_1-6.png" alt="0-1" title="ddd"></p>
+<hr>
+<h3 id="-java-">测试java环境</h3>
+<ul>
+<li><p>按住 <code>WIN + R</code> 键 输入 <code>cmd</code> 回车</p>
+</li>
+<li><p>在命令行窗口 输入 <code>java -version</code> 回车</p>
+</li>
+</ul>
+<p><img src="../image/Unity_Android/jdk_path_1-3.png" alt="0-1" title="ddd"></p>
+<ul>
+<li>如果正常显示 这样 表示环境已经搭建成功了</li>
+</ul>
+<hr>
+<h2 id="sdk-">sdk环境安装 <code>要记住安装或解压的路径</code></h2>
+<ul>
+<li>直接使用现成的 Windows-Android-sdk  在下载链接中的 <code>android-sdk_r24.4.1-windows.zip</code> 解压即用 非常的银杏</li>
+<li>或者 <a target="_blank" rel="noopener" href="https://blog.csdn.net/chinarcsdn/article/details/79562567">外力援助</a>  使用Android Studio  在下载链接中的 <code>Android-Studio.exe</code> 安装非常的头疼</li>
+</ul>
+<hr>
+<h2 id="unity-sdk-">Unity 与SDK关联</h2>
+<ul>
+<li>打开首选项    edit -&gt; preferences</li>
+</ul>
+<ul>
+<li>External Tools -&gt; jdk   如果是如图<code>3-1</code>酱紫  那这步也跳过 否则那就 取消勾选 点击 <code>Browse</code>  选择jdk的位置 </li>
+</ul>
+<p><img src="../image/Unity_Android/jdk_path_1-4.png" alt="tools">
+<img src="../image/Unity_Android/unity_build_0-9.png" alt="0-1" title="ddd"></p>
+<ul>
+<li>External Tools -&gt; sdk 将勾选取消掉 点击  <code>Browse</code> 选择sdk的路径</li>
+</ul>
+<p><img src="../image/Unity_Android/unity_build_0-8.png" alt="0-1" title="ddd"></p>
+<hr>
+<h2 id="-">打包设置</h2>
+<ul>
+<li>检查一下你的场景是否加载到这里 如果没有的话 就点击 <code>Add Open Scenes</code> 将场景加载进来</li>
+<li>若你有多个场景 请依次打开 并且依次 <code>Add Open Scenes</code> 进来</li>
+<li><p>全部加载进来后再次打开你游戏的初始化场景 再点击 <code>Add Open Scenes</code> 保证它是打开游戏后运行的第一个场景</p>
+</li>
+<li><p>再将平台切换到安卓</p>
+</li>
+</ul>
+<p><img src="../image/Unity_Android/unity_build_0-10.png" alt="0-1" title="ddd"></p>
+<ul>
+<li>打开 <code>Player Settings</code> 进行打包设置</li>
+</ul>
+<p><img src="../image/Unity_Android/unity_build_0-4.png" alt="0-1" title="ddd"></p>
+<ul>
+<li>注意看包名格式 xxx.xxx.xxx 公司名.包名.游戏名</li>
+</ul>
+<p><img src="../image/Unity_Android/unity_build_0-3.png" alt="0-1" title="ddd"></p>
+<ul>
+<li>最后 开始打包 build </li>
+</ul>
+<p><img src="../image/Unity_Android/unity_build_0-11.png" alt="0-1" title="ddd"></p>
+<p><img src="../image/Unity_Android/unity_build_0-14.png" alt="0-1" title="ddd"></p>
+<p><img src="../image/Unity_Android/unity_build_0-12.jpg" alt="0-1" title="ddd"></p>
+<p><img src="../image/Unity_Android/unity_build_0-13.jpg" alt="0-1" title="ddd"></p>
+<ul>
+<li>最后 打包错误锦集 <a target="_blank" rel="noopener" href="https://blog.csdn.net/ChinarCSDN/article/details/79597142">点击外援</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2021/09/01/Unity_build_Android/" data-id="ckts5czrr0000m8t9as8ufwr6" data-title="" class="article-share-link">Teilen</a>
       
       
       
@@ -169,7 +463,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/08/25/libuv_session%E5%86%85%E5%AD%98%E6%B1%A0%E7%9A%84%E8%AE%BE%E8%AE%A1/" data-id="cktmmrcrl00037wt9he6gfpnc" data-title="libuv session内存池的设计" class="article-share-link">Teilen</a>
+      <a data-url="http://example.com/2021/08/25/libuv_session%E5%86%85%E5%AD%98%E6%B1%A0%E7%9A%84%E8%AE%BE%E8%AE%A1/" data-id="ckts5czs90005m8t979rv9cb8" data-title="libuv session内存池的设计" class="article-share-link">Teilen</a>
       
       
       
@@ -259,7 +553,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/08/25/libuvC%E4%B8%AD%E7%9A%84TCP%E9%93%BE%E6%8E%A5/" data-id="cktmmrcrk00027wt9hnjq6ktg" data-title="Libuv C中的tcp连接" class="article-share-link">Teilen</a>
+      <a data-url="http://example.com/2021/08/25/libuvC%E4%B8%AD%E7%9A%84TCP%E9%93%BE%E6%8E%A5/" data-id="ckts5czs70004m8t9aus3ffni" data-title="Libuv C中的tcp连接" class="article-share-link">Teilen</a>
       
       
       
@@ -343,7 +637,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/08/25/libuv%E5%9C%A8C%E4%B8%AD%E7%9A%84%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" data-id="cktmmrcrm00047wt99bsy8p3m" data-title="Libuv c语言中的环境配置" class="article-share-link">Teilen</a>
+      <a data-url="http://example.com/2021/08/25/libuv%E5%9C%A8C%E4%B8%AD%E7%9A%84%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" data-id="ckts5czsb0006m8t9hatvg3zd" data-title="Libuv c语言中的环境配置" class="article-share-link">Teilen</a>
       
       
       
@@ -394,7 +688,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/08/25/hello-world/" data-id="cktmmrcrg00017wt9dw5l4t1v" data-title="Hello World" class="article-share-link">Teilen</a>
+      <a data-url="http://example.com/2021/08/25/hello-world/" data-id="ckts5czs50003m8t909np0m1k" data-title="Hello World" class="article-share-link">Teilen</a>
       
       
       
@@ -437,7 +731,15 @@
       <ul>
         
           <li>
-            <a href="/2021/09/16/2020-11-18-Unity_move/">(no title)</a>
+            <a href="/2021/09/20/Unity_build_Android/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/16/Unity_move/">Unity 键盘移动 鼠标旋转 空格跳跃</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/01/Unity_build_Android/">(no title)</a>
           </li>
         
           <li>
@@ -446,14 +748,6 @@
         
           <li>
             <a href="/2021/08/25/libuvC%E4%B8%AD%E7%9A%84TCP%E9%93%BE%E6%8E%A5/">Libuv C中的tcp连接</a>
-          </li>
-        
-          <li>
-            <a href="/2021/08/25/libuv%E5%9C%A8C%E4%B8%AD%E7%9A%84%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/">Libuv c语言中的环境配置</a>
-          </li>
-        
-          <li>
-            <a href="/2021/08/25/hello-world/">Hello World</a>
           </li>
         
       </ul>
